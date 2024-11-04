@@ -1,0 +1,81 @@
+@model AuctionApp.Models.Auctions.AuctionDetailsVm 
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Auction Details</h1>
+
+<div>
+    <div>
+        @* Kontrollera om användaren är ägaren av auktionen *@
+        @if (Model.IsOwner)
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Description</a>
+        }
+        else
+        {
+            <a asp-action="Bid" asp-route-id="@Model.Id" class="btn btn-success">Bid</a>
+        }
+    </div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Bids</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th><b>Price</b></th>
+            <th><b>Bidder</b></th>
+            <th><b>Bid Date</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.BidVms)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.BidDate)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-action="AllAuctions">Back to List</a>
+</div>
